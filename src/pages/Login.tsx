@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '@/components/ui/input';
 import { Label } from '@radix-ui/react-label';
 import React from 'react'
+import { Link } from 'react-router-dom';
 const Login = () => {
   return (
     <section className='flex justify-center h-screen items-center'>
@@ -25,6 +26,12 @@ const Login = () => {
       </CardContent>
       <CardFooter>
         <Button className="w-full">Sign in</Button>
+        <div className="mt-4 text-center text-sm">
+          Dont have an account?{" "}
+          <Link to={'/register'} className="underline">
+            Sign in
+          </Link>
+        </div>
       </CardFooter>
     </Card>
     </section>
