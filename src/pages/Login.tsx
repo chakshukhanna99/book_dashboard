@@ -3,16 +3,33 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-
-import { Link } from 'react-router-dom';
+import {useMutation} from '@tanstack/react-query';
+import { Link,useNavigate } from 'react-router-dom';
+import { login } from '@/http/api';
 const Login = () => {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
+    const navigate = useNavigate();
+
+      // Mutations
+  const mutation = useMutation({
+    mutationFn: login,
+    onSuccess: () => {
+      // Invalidate and refetch
+      console.log('login successfull');
+      navigate('/dashboard/home')
+    },
+  })
     const handleSign=()=>{
         const email=emailRef.current?.value;
         const password=passwordRef.current?.value;
         //make server call
         console.log("data",{email,password});
+        if(!email||!password){
+            return alert("please enter valid email or password");
+        }
+
+        mutation.mutate({email,password});
     }
   return (
     <section className='flex justify-center h-screen items-center'>
