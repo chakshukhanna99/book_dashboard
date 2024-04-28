@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Link,Outlet } from 'react-router-dom';
+import { Link,Navigate,Outlet } from 'react-router-dom';
 import {
     Bell,
     CircleUser,
@@ -18,8 +18,20 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { useStore } from 'zustand';
+import useTokenStore from '@/store';
 
 const DashboardLayout = () => {
+  const {token,setToken} = useTokenStore(state=>state);
+
+  if(!token){
+    return <Navigate to={'/auth/login'} replace/>
+  }
+
+  const handleLogout = () =>{
+    console.log('logging out');
+    setToken('');
+  }
   return (
     <>
       <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -175,7 +187,9 @@ const DashboardLayout = () => {
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem>
+                <Button variant={'link'} onClick={handleLogout}>Logout</Button>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
