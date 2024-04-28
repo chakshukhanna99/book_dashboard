@@ -7,6 +7,10 @@ import Books from './pages/Books';
 import AuthLayout from './layouts/AuthLayout';
 import CreateBook from './pages/CreateBook';
  const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Navigate to="/dashboard/home" />,
+},
     {
       path:'dashboard',
       element:<DashboardLayout/>,
