@@ -7,19 +7,22 @@ import {useMutation} from '@tanstack/react-query';
 import { Link,useNavigate } from 'react-router-dom';
 import { signup } from '@/http/api';
 import { LoaderCircle } from 'lucide-react';
+import useTokenStore from '@/store';
 
 const Register = () => {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const nameRef=useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
+    const setToken = useTokenStore((state)=>state.setToken);
 
       // Mutations
   const mutation = useMutation({
     mutationFn: signup,
-    onSuccess: () => {
+    onSuccess: (response) => {
       // Invalidate and refetch
       console.log('login successfull');
+      setToken(response.data.accessToken);
       navigate('/dashboard/home')
     },
   })
