@@ -7,7 +7,6 @@ function App() {
     <>
      <h1>Hello,Welcome to my book client dashboard</h1>
      <Button variant={'destructive'}>Click Me</Button>
-     
     </>
   )
 }
